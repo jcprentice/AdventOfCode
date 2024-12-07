@@ -2,7 +2,7 @@ library(tidyverse)
 
 message("\n# Day 03")
 
-input <- readLines("day_03-input.txt")
+input <- readLines("2024/day_03-input.txt")
 
 part1 <- input |>
     str_extract_all("mul\\(\\d+,\\d+\\)") |>

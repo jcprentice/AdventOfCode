@@ -2,7 +2,7 @@ library(tidyverse)
 
 message("# Day 01")
 
-input <- read_delim("day_01-input.txt",
+input <- read_delim("2024/day_01-input.txt",
                     delim = "   ",
                     col_names = FALSE,
                     col_types = "ii") |>

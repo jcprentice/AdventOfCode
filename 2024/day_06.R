@@ -4,7 +4,7 @@ library(matricks)
 
 message("\n# Day 06")
 
-input <- readLines("day_06-input.txt")
+input <- readLines("2024/day_06-input.txt")
 input
 
 N <- length(input)

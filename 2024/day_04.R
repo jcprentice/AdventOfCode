@@ -3,7 +3,7 @@ library(matricks)
 
 message("\n# Day 04")
 
-input <- readLines("day_04-input.txt")
+input <- readLines("2024/day_04-input.txt")
 
 find_xmas <- function(mat) {
     n <- dim(mat)[[1]]

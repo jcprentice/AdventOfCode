@@ -2,7 +2,7 @@ library(tidyverse)
 
 message("\n# Day 05")
 
-input <- "day_05-input.txt"
+input <- "2024/day_05-input.txt"
 
 lines <- readLines(input)
 line_no <- which(lines == "")

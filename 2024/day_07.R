@@ -2,7 +2,7 @@ library(tidyverse)
 
 message("\n# Day 07")
 
-input <- readLines("day_07-input.txt")
+input <- readLines("2024/day_07-input.txt")
 input
 
 find_match <- function(goal, xs) {

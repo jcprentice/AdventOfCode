@@ -2,7 +2,7 @@ library(tidyverse)
 
 message("\n# Day 02")
 
-input <- readLines("day_02-input.txt") |>
+input <- readLines("2024/day_02-input.txt") |>
     map(\(x) str_split_1(x, " ") |> as.integer())
 
 is_safe <- function(x) {
