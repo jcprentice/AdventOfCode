@@ -26,7 +26,7 @@ direction <- list(c(-1, 0), c(0, 1), c(1, 0), c(0, -1))
 dirs <- c("N", "E", "S", "W")
 rotate <- function(n = 1) mod1(n + 1, 4)
 
-pdir <- function(x) paste0("[", x[1], ",", x[2], "]")
+pdir <- function(x) paste0("[", x[[1]], ",", x[[2]], "]")
 
 find_path <- function(mat, pos = xy0, dir = 1) {
     test_pos <- pos + direction[[dir]]
@@ -34,7 +34,7 @@ find_path <- function(mat, pos = xy0, dir = 1) {
         # message("Gone off the edge at ", pdir(pos), " heading ", dirs[[dir]])
         return(mat)
     }
-    
+
     if (at(mat, test_pos) == "#") {
         # Something in front of us, turn right
         new_pos <- pos
@@ -65,13 +65,13 @@ print_mat <- function(mat) {
 
 find_path2 <- function(mat, pos = xy0, dir = 1) {
     test_pos <- pos + direction[[dir]]
-    
+
     # Left lab
     if (any(test_pos %in% c(0, N + 1))) return(FALSE)
-    
+
     # Loop condition
     if (at(mat, test_pos) == dirs[[dir]]) return(TRUE)
-    
+
     if (at(mat, test_pos) == "#") {
         # Something in front of us, turn right
         new_pos <- pos
@@ -88,15 +88,13 @@ find_path2 <- function(mat, pos = xy0, dir = 1) {
 }
 
 
-
-part2 <- map_lgl(seq_len(length(mat)), \(i) {
-    block <- i_to_xy(i, N)
-    
-    if (at(mat_end, block) != "X") return(FALSE)
-    
-    at(mat, block) <- "#"
-    find_path2(mat, xy0, 1)
-},
-.progress = TRUE) |> sum()
+part2 <- seq_len(length(mat)) |>
+    map_lgl(~ {
+        block <- i_to_xy(.x, N)
+        if (at(mat_end, block) != "X") return(FALSE)
+        at(mat, block) <- "#"
+        find_path2(mat, xy0, 1)
+    },
+    .progress = TRUE) |> sum()
 
 message(" - Part 2 = ", part2)
