@@ -18,44 +18,38 @@ input
 # If none of the other rules apply, the stone is replaced by a new stone; the
 # old stone's number multiplied by 2024 is engraved on the new stone.
 
-blink <- function(s, blinks = 25) {
-    # message(strrep("  ", blinks), s)
-    if (blinks <= 0) {
-        return(s)
+num_digits <- function(n) floor(log10(n)) + 1
+
+cache <- collections::dict()
+
+blink_count <- function(num, steps) {
+    if (steps == 0) {
+        return(1)
+    }
+    if (cache$has(c(num, steps))) {
+        return(cache$get(c(num, steps), 1))
     }
 
-    str_split_1(s, " ") |>
-        map_chr(~ {
-        if (.x == "0") {
-            "1"
+    ans <- if (num == 0) {
+        blink_count(1, steps - 1)
+    } else {
+        N <- num_digits(num)
+        if (N %% 2 == 0) {
+            left <- num %/% 10^(N / 2)
+            right <- num %% 10^(N / 2)
+            blink_count(left, steps - 1) + blink_count(right, steps - 1)
         } else {
-            N <- str_length(.x)
-            if (N %% 2 == 0) {
-                c(str_sub(.x, 1, N / 2),
-                  str_sub(.x, N / 2 + 1, N)) |>
-                    as.numeric() |>
-                    paste(collapse = " ")
-            } else {
-                as.character(as.numeric(.x) * 2024)
-            }
+            blink_count(num * 2024, steps - 1)
         }
-    }) |>
-        paste(collapse = " ") |>
-        blink(blinks - 1)
+    }
+    cache$set(c(num, steps), ans)
+    ans
 }
 
-part1 <- blink(input, 25) |>
-    str_split_1(" ") |>
-    length()
+nums <- input |> str_split_1(" ") |> as.numeric()
 
-
+part1 <- map_dbl(nums, blink_count, 25) |> sum()
 message("- Part1 = ", part1)
 
-
-part1 <- blink(input, 75) |>
-    str_split_1(" ") |>
-    length()
-
-
-part2 <- 0
+part2 <- map_dbl(nums, blink_count, 75) |> sum()
 message("- Part2 = ", part2)

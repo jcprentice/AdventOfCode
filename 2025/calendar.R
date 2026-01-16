@@ -1,0 +1,7 @@
+source("2024/day_01.R")
+source("2024/day_02.R")
+source("2024/day_03.R")
+source("2024/day_04.R")
+source("2024/day_05.R")
+source("2024/day_06.R")
+source("2024/day_07.R")
