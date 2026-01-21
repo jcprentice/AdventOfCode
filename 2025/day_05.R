@@ -31,7 +31,7 @@ reduce_range <- function(mat, i = 2) {
 
     if (i > 1 && m1 + 1 >= m2) {
         mat2 <- matrix(c(mat[-i, 1], mat[1 - i, 2]), ncol = 2)
-        # Be careful if
+        # Be careful here
         mat2[i - 1, 2] <- max(mat[c(i, i-1), 2])
         print(mat2)
         j <- i

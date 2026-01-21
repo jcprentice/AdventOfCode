@@ -2,7 +2,7 @@ library(tidyverse)
 
 message("# Day 08")
 
-input <- read_lines("2025/day_08-input-ex.txt")
+# input <- read_lines("2025/day_08-input-ex.txt")
 input <- read_lines("2025/day_08-input.txt")
 
 positions <- input |> str_split(",") |> unlist() |> as.integer() |>
@@ -10,15 +10,8 @@ positions <- input |> str_split(",") |> unlist() |> as.integer() |>
 
 N <- nrow(positions)
 
-dmat <- matrix(Inf, N, N)
-
-for (i in seq(N - 1)) for (j in seq(i + 1, N)) {
-    dmat[i, j] <- sqrt(sum((positions[i, ] - positions[j, ])^2))
-}
-
-get_xy <- function(i) {
-    c(((i - 1) %% N) + 1, ceiling(i / N))
-}
+dmat <- dist(positions, diag = TRUE) |> as.matrix()
+dmat[lower.tri(dmat, diag = TRUE)] <- Inf
 
 ranks <- matrix(rank(dmat, ties = "min"), N, N)
 
@@ -26,8 +19,8 @@ ranks <- matrix(rank(dmat, ties = "min"), N, N)
 boxes <- rep(0, N)
 grp <- 0
 mat <- matrix(0, N, N)
-for (i in 1:10) {
-    xy <- get_xy(which(ranks == i))
+for (i in 1:N) {
+    xy <- which(ranks == i, arr.ind = TRUE) |> as.integer()
     bxy <- boxes[xy]
     zeros <- sum(bxy == 0)
     if (zeros == 2) {
@@ -40,7 +33,7 @@ for (i in 1:10) {
         boxes[xy] <- min(bxy)
         boxes[boxes == max(bxy)] <- min(bxy)
     }
-    print(c(i, xy))
+    # print(c(i, xy))
     mat[i,] <- boxes
 }
 val1 <- prod(tail(sort(table(boxes)[-1]), 3))
@@ -54,7 +47,7 @@ grp <- 0
 i <- 0
 while(TRUE) {
     i <- i + 1
-    xy <- get_xy(which(ranks == i))
+    xy <- which(ranks == i, arr.ind = TRUE) |> as.integer()
     bxy <- boxes[xy]
     zeros <- sum(bxy == 0)
     if (zeros == 2) {
