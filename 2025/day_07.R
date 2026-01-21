@@ -9,7 +9,7 @@ rows <- length(input)
 cols <- nchar(input[[1]])
 
 mat <- input |> str_split("") |> unlist() |>
-    matrix(byrow = TRUE, nrow = rows, ncol = cols)
+    matrix(rows, cols, byrow = TRUE)
 
 paths <- matrix(0, rows, cols)
 paths[1:2, which(mat[1, ] == "S")] <- 1

@@ -13,7 +13,7 @@ x <- input |>
     str_split("") |>
     unlist() |>
     as.integer() |>
-    matrix(byrow = TRUE, nrow = N)
+    matrix(nrow = N, byrow = TRUE)
 
 window <- matrix(1, 3, 3); window[2, 2] <- 0
 

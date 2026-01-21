@@ -6,7 +6,7 @@ message("# Day 08")
 input <- read_lines("2025/day_08-input.txt")
 
 positions <- input |> str_split(",") |> unlist() |> as.integer() |>
-    matrix(byrow = TRUE, ncol = 3)
+    matrix(ncol = 3, byrow = TRUE)
 
 N <- nrow(positions)
 

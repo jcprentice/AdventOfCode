@@ -6,7 +6,7 @@ message("# Day 06")
 input <- read_lines("2025/day_06-input.txt")
 
 mat <- input |> str_squish() |> str_split(" ") |> unlist() |>
-    matrix(byrow = TRUE, nrow = length(input))
+    matrix(nrow = length(input), byrow = TRUE)
 
 nr <- dim(mat)[[1]]
 nc <- dim(mat)[[2]]
@@ -32,7 +32,7 @@ val2 <- map_dbl(1:nc, \(i) {
         map_chr(str_sub, pos[i, 1], pos[i, 2] - 1)
     op <- x[[nr]] |> str_squish()
     nos <- head(x, -1) |> str_split("") |> unlist() |>
-        matrix(byrow = TRUE, nrow = nr - 1) |>
+        matrix(nrow = nr - 1, byrow = TRUE) |>
         apply(2, str_flatten) |> str_squish() |>
         as.integer()
 

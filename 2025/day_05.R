@@ -18,7 +18,7 @@ val1 <- map_lgl(items, \(i) {
 message(" - answer = ", val1)
 
 # First create an Nx2 matrix of ranges, then sort by the lower ends
-rmat <- matrix(unlist(ranges), byrow = TRUE, ncol = 2)
+rmat <- matrix(unlist(ranges), ncol = 2, byrow = TRUE)
 mat <- rmat[order(rmat[, 1]), ]
 
 reduce_range <- function(mat, i = 2) {
