@@ -5,7 +5,7 @@ gen_day <- function(d = 1, y = 2025) {
 
     f <- str_glue("{y}/day_{fd}.R")
 
-    str_glue(
+    s <- str_glue(
         "library(tidyverse)",
         "",
         "message(\"# Day {fd}\")",
@@ -22,10 +22,14 @@ gen_day <- function(d = 1, y = 2025) {
         "message(\" - answer = \", val2)",
         "\n",
         .sep = "\n",
-    ) |>
-        cat()
-        writeLines(con = f)
+    )
+    if (!file.exists(f)) writeLines(s, con = f)
 
-    f |> str_replace("\\.R", "-input-ex.txt") |> file.create()
-    f |> str_replace("\\.R", "-input.txt") |> file.create()
+    fex <- str_replace(f, ".R", "-input-ex.txt")
+    if (!file.exists(fex)) file.create(fex)
+
+    fin <- str_replace(f, ".R", "-input.txt")
+    if (!file.exists(fin)) file.create(fin)
+
+    message(str_glue("files generated for {y} / day {fd}"))
 }
